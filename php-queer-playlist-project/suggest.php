@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$error_message = "Please fill in the required fields: Name, Email, and Artist";
 	}
 
-	if ($_POST["address"] != "") {
+	if (!isset($error_message) && $_POST["address"] != "") {
 		$error_message = "Bad form input";
 	}
 
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	$mail = new PHPMailer;
 
-	if (!$mail->ValidateAddress($email)) {
+	if (!isset($error_message) && !$mail->ValidateAddress($email)) {
 	$error_message = "Invalid Email Address";
 	}
   
@@ -108,19 +108,19 @@ $section = "suggest";
   						<table>
   							<tr>
   								<th><label for="name">Name (required):</label></th>
-  								<td><input type="text" name="name" id="name" /></td>
+  								<td><input type="text" name="name" id="name" value="<?php if (isset($name)) { echo htmlspecialchars($_POST["name"]); } ?>" /></td>
   							</tr>
   							<tr>
   								<th><label for="email">Email (required):</label></th>
-  								<td><input type="text" name="email" id="email" /></td>
+  								<td><input type="text" name="email" id="email" value="<?php if (isset($email)) { echo htmlspecialchars($_POST["email"]); } ?>" /></td>
   							</tr>
   							<tr>
   								<th><label for="artist">Artist/Band (required):</label></th>
-  								<td><input type="text" name="artist" id="artist" /></td>
+  								<td><input type="text" name="artist" id="artist" value="<?php if (isset($artist)) { echo htmlspecialchars($_POST["artist"]); } ?>"/></td>
   							</tr>
   							<tr>
   								<th><label for="song">Song(s)</label></th>
-  								<td><input type="text" name="song" id="song" /></td>
+  								<td><input type="text" name="song" id="song" value="<?php if (isset($song)) { echo htmlspecialchars($_POST["song"]); } ?>"/></td>
   							</tr>
   							<tr style="display:none">
   								<th><label for="address">Address</label></th>
