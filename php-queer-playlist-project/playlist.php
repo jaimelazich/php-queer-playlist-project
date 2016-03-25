@@ -13,7 +13,9 @@ $section = "playlist";
         try {
             $pdo = new PDO('mysql:host=localhost;port=3306;dbname=sys', 'root', 'azul');
               foreach($pdo->query('SELECT * from playlist_queer') as $row) {
+                    echo '<pre>';
                     print_r($row);
+                    echo '</pre>';
                 }
             sleep(5);
             $stmt = $pdo->prepare('SELECT * FROM playlist_queer');
