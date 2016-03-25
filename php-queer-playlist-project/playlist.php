@@ -12,27 +12,26 @@ $section = "playlist";
         <?php
         try {
             $pdo = new PDO('mysql:host=localhost;port=3306;dbname=sys', 'root', 'azul');
-              foreach($pdo->query('SELECT * from playlist_queer') as $row) {
-                    echo '<pre>';
-                    print_r($row);
-                    echo '</pre>';
-                }
-            sleep(5);
-            $stmt = $pdo->prepare('SELECT * FROM playlist_queer');
-            $stmt->execute();
-            $pdo->query('SELECT pg_terminate_backend(pg_backend_pid());');
-            $pdo = null;
-            sleep(60);
-            
-          
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
+            $results = $pdo->query('select * from playlist_queer');
+          } catch(Exception $e) {
+          	echo $e->getMessage();
+          	die();
+          }
+
+          $playlist = $results->fetchAll(PDO::FETCH_ASSOC);
+             
         ?>
+
+        	<ol>
+        		<?php
+        		foreach($playlist as $entry) {
+        			echo '<li><i class="lens"></i>'.$entry["artist"]. ' - ' .$entry["song_title"].'</li>';
+        		}
+        		?>
+        	</ol>
+
         </div>
 
 		</div>
 
-	<! -- end content -->
 <?php include("inc/footer.php"); ?>
